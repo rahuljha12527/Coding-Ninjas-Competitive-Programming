@@ -15,45 +15,42 @@
 // 3  8  1  2  0
 // Sample Output
 // 8 -1  2 -1 -1
-
-
-import java.util.Stack;
-import java.util.ArrayList;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class solution {
-	public static ArrayList<Integer> nextGreaterElement(ArrayList<Integer> input) {
-		int n=input.size();
-	ArrayList<Integer> output = new ArrayList<Integer>(Collections.nCopies(n, 0));
-    Stack<Integer> stack=new Stack<Integer>();
-	for(int i=n-1;i>=0;i--){
-	//	System.out.println("aaaa",+i);
-		if(stack.isEmpty()){
-		    output.set(i,-1);
 
-			stack.push(input.get(i));
+  // Function to find the Next Greater Element for each element in the input array
+  public static ArrayList<Integer> nextGreaterElement(ArrayList<Integer> input) {
+    int n = input.size();
+    ArrayList<Integer> output = new ArrayList<Integer>(Collections.nCopies(n, 0));
+    Stack<Integer> stack = new Stack<Integer>();
 
-		}
-		else{
-            while(!stack.isEmpty() && stack.peek()<=input.get(i)){
-				stack.pop();
-			}
+    // Traverse the input array from right to left
+    for (int i = n - 1; i >= 0; i--) {
+      if (stack.isEmpty()) {
+        // If the stack is empty, there's no greater element to the right
+        output.set(i, -1);
+        stack.push(input.get(i));
+      } else {
+        // While the stack is not empty and the top element is smaller than the current element
+        while (!stack.isEmpty() && stack.peek() <= input.get(i)) {
+          stack.pop();
+        }
 
-			if(stack.isEmpty()){
-				output.set(i,-1);
-				stack.push(input.get(i));
-			
-			}
-			else{
-				output.set(i,stack.peek());
-				stack.push(input.get(i));
-			}
+        if (stack.isEmpty()) {
+          // If the stack becomes empty, there's no greater element to the right
+          output.set(i, -1);
+          stack.push(input.get(i));
+        } else {
+          // If a greater element is found, set it as the output and push the current element to the stack
+          output.set(i, stack.peek());
+          stack.push(input.get(i));
+        }
+      }
+    }
 
-
-		}
-	}
-
-	return output;
-        
-	}
+    return output;
+  }
 }
